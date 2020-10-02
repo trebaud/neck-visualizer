@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import Fretboard, { scaleNotes } from 'react-fretboard';
+import CheckBox from 'react-animated-checkbox';
 import styled from 'styled-components';
 
 const Main = styled.main`
@@ -22,10 +23,15 @@ const Col = styled.div`
 	height: 16rem;
 `;
 
+const Label = styled.label`
+	margin-left: 1rem;
+`;
+
 const ROOT_NOTES = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 
 function App() {
 	const [rootNote, setRootNote] = useState();
+	const [showNotes, setShowNotes] = useState(true);
 
 	function getRootNoteOptions() {
 		return ROOT_NOTES.map(note => ({
@@ -49,7 +55,7 @@ function App() {
 			<Fretboard
 				skinType="strings"
 				nrOfFrets={20}
-				showNotes
+				showNotes={showNotes}
 				selectedNotes={getNeckNotes()}
 				theme={{
 					statusMap: {
@@ -69,7 +75,19 @@ function App() {
 							options={getRootNoteOptions()}
 						/>
 					</Col>
-					<Col style={{ backgroundColor: '#f7fcff' }}></Col>
+					<Col style={{ backgroundColor: '#f7fcff' }}>
+						<CheckBox
+							checked={showNotes}
+							checkBoxStyle={{
+								checkedColor: '#b5cbbb',
+								size: 25,
+								unCheckedColor: '#b8b8b8',
+							}}
+							duration={400}
+							onClick={() => setShowNotes(!showNotes)}
+						/>
+						<Label>Show all notes</Label>
+					</Col>
 				</Row>
 			</Settings>
 		</Main>

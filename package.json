@@ -5,6 +5,7 @@
 	"dependencies": {
 		"@types/react-select": "^3.0.21",
 		"react": "16.x",
+		"react-animated-checkbox": "^0.1.4",
 		"react-dom": "16.x",
 		"react-fretboard": "0.x",
 		"react-select": "^3.1.0",
