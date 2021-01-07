@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/neck-visualizer/static/css/main.c415fe82.chunk.css",
+    "main.js": "/neck-visualizer/static/js/main.a6c7c1d4.chunk.js",
+    "main.js.map": "/neck-visualizer/static/js/main.a6c7c1d4.chunk.js.map",
+    "runtime-main.js": "/neck-visualizer/static/js/runtime-main.91a45543.js",
+    "runtime-main.js.map": "/neck-visualizer/static/js/runtime-main.91a45543.js.map",
+    "static/js/2.f23457fb.chunk.js": "/neck-visualizer/static/js/2.f23457fb.chunk.js",
+    "static/js/2.f23457fb.chunk.js.map": "/neck-visualizer/static/js/2.f23457fb.chunk.js.map",
+    "index.html": "/neck-visualizer/index.html",
+    "precache-manifest.20982ea1309d433b369f47533e9a00c9.js": "/neck-visualizer/precache-manifest.20982ea1309d433b369f47533e9a00c9.js",
+    "service-worker.js": "/neck-visualizer/service-worker.js",
+    "static/css/main.c415fe82.chunk.css.map": "/neck-visualizer/static/css/main.c415fe82.chunk.css.map",
+    "static/js/2.f23457fb.chunk.js.LICENSE.txt": "/neck-visualizer/static/js/2.f23457fb.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.91a45543.js",
+    "static/js/2.f23457fb.chunk.js",
+    "static/css/main.c415fe82.chunk.css",
+    "static/js/main.a6c7c1d4.chunk.js"
+  ]
+}
