@@ -5,7 +5,7 @@ import CheckBox from 'react-animated-checkbox';
 import styled from 'styled-components';
 
 const Main = styled.main`
-	background-image: url(static/images/cool-background.png);
+	background-image: url(neck-visualizer/static/images/cool.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	display: grid;
@@ -67,39 +67,85 @@ const Label = styled.label`
 	margin-left: 1rem;
 `;
 
+const Notes = styled.ul`
+	list-style: none;
+`;
+
+const Note = styled.li<{ color: string }>`
+	&::before {
+		content: '•';
+		font-weight: bold;
+		font-size: 2rem;
+		margin-right: 1rem;
+		color: ${props => props.color};
+	}
+`;
+
 const ROOT_NOTES = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 const TUNINGS = {
 	STANDARD: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
-	FOURTHS: ['E2', 'A2', 'D3', 'G3', 'C3', 'F4'],
+	FOURTHS: ['E2', 'A2', 'D3', 'G3', 'C4', 'F4'],
+};
+const INTERVAL_LABELS = ['root', '2M', '3M', '4P', '5P', '6M', '7M'];
+
+const STATUS_COLOR_MAP = {
+	root: '#2196f3',
+	'2M': '#FFB6C1',
+	'3M': '#6ec6ff',
+	'4P': '#32CD32',
+	'5P': '#9a67ea',
+	'6M': '#F08080',
+	'7M': '#b9e59e',
+};
+
+type OptionType = {
+	value: string;
+	label: string;
 };
 
 function App() {
-	const [rootNote, setRootNote] = useState();
-	const [tuning, setTuning] = useState();
-	const [showNotes, setShowNotes] = useState(true);
-	const notes = rootNote ? scaleNotes(rootNote, 'major').map((n: any) => n.note) : [];
+	const [rootNote, setRootNote] = useState<OptionType>();
+	const [tuning, setTuning] = useState(getTuningOptions[0]);
+	const [showNotes, setShowNotes] = useState<boolean>(true);
+	const notes = rootNote?.value
+		? scaleNotes(rootNote?.value, 'major').map((n: any) => n.note)
+		: [];
 
-	function getRootNoteOptions() {
+	console.log(tuning);
+	console.log(rootNote);
+
+	function getRootNoteOptions(): OptionType[] {
 		return ROOT_NOTES.map(note => ({
 			label: note,
-			option: note,
+			value: note,
 		}));
 	}
 
-	function getTuningOptions() {
+	function getTuningOptions(): OptionType[] {
 		return [
-			{ option: TUNINGS.STANDARD, label: 'standard' },
-			{ option: TUNINGS.FOURTHS, label: 'fourths' },
+			{ value: 'STANDARD', label: 'Standard' },
+			{ value: 'FOURTHS', label: 'Fourths' },
 		];
 	}
 
 	function getNeckNotes() {
 		return [
 			{ note: notes[0], status: 'root' },
+			{ note: notes[1], status: '2M' },
 			{ note: notes[2], status: '3M' },
+			{ note: notes[3], status: '4P' },
 			{ note: notes[4], status: '5P' },
+			{ note: notes[5], status: '6M' },
 			{ note: notes[6], status: '7M' },
 		];
+	}
+
+	function handleChangeTuning(option) {
+		setTuning(option);
+	}
+
+	function handleChangeRootNote(option) {
+		setRootNote(option);
 	}
 
 	return (
@@ -111,35 +157,30 @@ function App() {
 				<Fretboard
 					skinType="strings"
 					nrOfFrets={20}
-					tuning={tuning}
+					tuning={TUNINGS[tuning?.value]}
 					showNotes={showNotes}
 					selectedNotes={getNeckNotes()}
-					theme={{
-						statusMap: {
-							'7M': '#b9e59e',
-							root: '#2196f3',
-							'3M': '#6ec6ff',
-							'5P': '#9a67ea',
-						},
-					}}
+					theme={{ statusMap: STATUS_COLOR_MAP }}
 				/>
 			</Neck>
 			<Settings>
 				<Section>
 					<label>Tuning</label>
 					<Select
+						id="tuning"
 						value={tuning}
-						placeholder="Select a tuning (standard tuning by default)"
-						onChange={({ option }: any) => setTuning(option)}
+						placeholder="Standard tuning by default"
+						onChange={handleChangeTuning}
 						options={getTuningOptions()}
 					/>
 				</Section>
 				<Section>
 					<label>Root note</label>
 					<Select
+						id="rootNote"
 						value={rootNote}
 						placeholder="Select a root note"
-						onChange={({ option }: any) => setRootNote(option)}
+						onChange={handleChangeRootNote}
 						options={getRootNoteOptions()}
 					/>
 				</Section>
@@ -157,7 +198,18 @@ function App() {
 					<Label>Show all notes</Label>
 				</Section>
 			</Settings>
-			<Info>{notes}</Info>
+			<Info>
+				<Section>
+					Major scale:
+					<Notes>
+						{notes.map((note: string, index: number) => (
+							<Note color={STATUS_COLOR_MAP[INTERVAL_LABELS[index]]}>
+								{INTERVAL_LABELS[index]}: {note}
+							</Note>
+						))}
+					</Notes>
+				</Section>
+			</Info>
 		</Main>
 	);
 }
