@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/neck-visualizer/static/css/main.c415fe82.chunk.css",
-    "main.js": "/neck-visualizer/static/js/main.bce76957.chunk.js",
-    "main.js.map": "/neck-visualizer/static/js/main.bce76957.chunk.js.map",
+    "main.js": "/neck-visualizer/static/js/main.e6b4111f.chunk.js",
+    "main.js.map": "/neck-visualizer/static/js/main.e6b4111f.chunk.js.map",
     "runtime-main.js": "/neck-visualizer/static/js/runtime-main.91a45543.js",
     "runtime-main.js.map": "/neck-visualizer/static/js/runtime-main.91a45543.js.map",
     "static/js/2.f23457fb.chunk.js": "/neck-visualizer/static/js/2.f23457fb.chunk.js",
     "static/js/2.f23457fb.chunk.js.map": "/neck-visualizer/static/js/2.f23457fb.chunk.js.map",
     "index.html": "/neck-visualizer/index.html",
-    "precache-manifest.2c76188897f820b8612f9b54e22efd28.js": "/neck-visualizer/precache-manifest.2c76188897f820b8612f9b54e22efd28.js",
+    "precache-manifest.53ad2631a39721cb484d08add8a83b87.js": "/neck-visualizer/precache-manifest.53ad2631a39721cb484d08add8a83b87.js",
     "service-worker.js": "/neck-visualizer/service-worker.js",
     "static/css/main.c415fe82.chunk.css.map": "/neck-visualizer/static/css/main.c415fe82.chunk.css.map",
     "static/js/2.f23457fb.chunk.js.LICENSE.txt": "/neck-visualizer/static/js/2.f23457fb.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.91a45543.js",
     "static/js/2.f23457fb.chunk.js",
     "static/css/main.c415fe82.chunk.css",
-    "static/js/main.bce76957.chunk.js"
+    "static/js/main.e6b4111f.chunk.js"
   ]
 }
