@@ -4,10 +4,10 @@ import Fretboard, { scaleNotes } from 'react-fretboard';
 import CheckBox from 'react-animated-checkbox';
 import styled from 'styled-components';
 
-const basePath = process.env.REACT_APP_ENV !== 'production' ? 'neck-visualizer' : '';
+const basePath = process.env.NODE_ENV !== 'production' ? 'neck-visualizer/' : '';
 
 const Main = styled.main`
-	background-image: url(${basePath}/static/images/cool.png);
+	background-image: url(${basePath}static/images/cool.png);
 	background-size: cover;
 	display: grid;
 	grid-gap: 1rem;
@@ -218,7 +218,7 @@ function App() {
 				<Section style={{ width: '2rem' }}>
 					<img
 						alt="circle-of-fifths"
-						src={`${basePath}/static/images/circle-of-fifths.jpg`}
+						src={`${basePath}static/images/circle-of-fifths.jpg`}
 					/>
 				</Section>
 			</Info>
