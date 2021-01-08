@@ -58,6 +58,10 @@ const Info = styled.div`
 	border-radius: 0.25rem;
 `;
 
+const InfoTitle = styled.div`
+	font-size: 1.25rem;
+`;
+
 const Section = styled.div`
 	margin-bottom: 2rem;
 `;
@@ -68,6 +72,7 @@ const Label = styled.label`
 
 const Notes = styled.ul`
 	list-style: none;
+	border-left: 4px solid aliceblue;
 `;
 
 const Note = styled.li<{ color: string }>`
@@ -199,7 +204,7 @@ function App() {
 			</Settings>
 			<Info>
 				<Section>
-					Major scale:
+					<InfoTitle>Major scale:</InfoTitle>
 					<Notes>
 						{notes.map((note: string, index: number) => (
 							<Note color={STATUS_COLOR_MAP[INTERVAL_LABELS[index]]}>
