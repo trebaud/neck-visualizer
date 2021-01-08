@@ -7,7 +7,6 @@ import styled from 'styled-components';
 const Main = styled.main`
 	background-image: url(static/images/cool.png);
 	background-size: cover;
-	background-repeat: no-repeat;
 	display: grid;
 	grid-gap: 1rem;
 	grid-template-areas:
@@ -124,7 +123,7 @@ function App() {
 	function getTuningOptions(): OptionType[] {
 		return [
 			{ value: 'STANDARD', label: 'Standard' },
-			{ value: 'FOURTHS', label: 'Fourths' },
+			{ value: 'FOURTHS', label: 'All fourths' },
 		];
 	}
 
