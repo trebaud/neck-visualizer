@@ -56,6 +56,8 @@ const Info = styled.div`
 	opacity: 0.8;
 	margin-top: 2rem;
 	border-radius: 0.25rem;
+	display: flex;
+	flex-direction: columns;
 `;
 
 const InfoTitle = styled.div`
@@ -114,9 +116,6 @@ function App() {
 	const notes = rootNote?.value
 		? scaleNotes(rootNote?.value, 'major').map((n: any) => n.note)
 		: [];
-
-	console.log(tuning);
-	console.log(rootNote);
 
 	function getRootNoteOptions(): OptionType[] {
 		return ROOT_NOTES.map(note => ({
@@ -203,7 +202,7 @@ function App() {
 				</Section>
 			</Settings>
 			<Info>
-				<Section>
+				<Section style={{ width: '24rem' }}>
 					<InfoTitle>Major scale:</InfoTitle>
 					<Notes>
 						{notes.map((note: string, index: number) => (
@@ -212,6 +211,10 @@ function App() {
 							</Note>
 						))}
 					</Notes>
+				</Section>
+
+				<Section style={{ width: '2rem' }}>
+					<img src="neck-visualizer/static/images/circle-of-fifths.jpg" />
 				</Section>
 			</Info>
 		</Main>
