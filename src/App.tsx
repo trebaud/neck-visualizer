@@ -4,7 +4,7 @@ import Fretboard, { scaleNotes } from 'react-fretboard';
 import CheckBox from 'react-animated-checkbox';
 import styled from 'styled-components';
 
-const basePath = process.env.NODE_ENV !== 'production' ? 'neck-visualizer/' : '';
+const basePath = process.env.NODE_ENV === 'development' ? 'neck-visualizer/' : '';
 
 const Main = styled.main`
 	background-image: url(${basePath}static/images/cool.png);
@@ -94,15 +94,24 @@ const TUNINGS = {
 	STANDARD: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
 	FOURTHS: ['E2', 'A2', 'D3', 'G3', 'C4', 'F4'],
 };
-const INTERVAL_LABELS = ['root', '2M', '3M', '4P', '5P', '6M', '7M'];
+
+const SCALE_STATUS_MAP = {
+	major: ['root', '2M', '3M', '4P', '5P', '6M', '7M'],
+	'harmonic minor': ['root', '2M', '3m', '4P', '5P', '6m', '7M'],
+	'melodic minor': ['root', '2M', '3m', '4P', '5P', '6M', '7M'],
+	augmented: ['root'],
+	diminished: ['root'],
+};
 
 const STATUS_COLOR_MAP = {
 	root: '#2196f3',
 	'2M': '#FFB6C1',
+	'3m': 'yellow',
 	'3M': '#6ec6ff',
 	'4P': '#32CD32',
 	'5P': '#9a67ea',
 	'6M': '#F08080',
+	'7m': 'red',
 	'7M': '#b9e59e',
 };
 
@@ -113,10 +122,11 @@ type OptionType = {
 
 function App() {
 	const [rootNote, setRootNote] = useState<OptionType>();
-	const [tuning, setTuning] = useState(getTuningOptions[0]);
+	const [tuning, setTuning] = useState(getTuningOptions()[0]);
+	const [scale, setScale] = useState(getScaleOptions()[0]);
 	const [showNotes, setShowNotes] = useState<boolean>(true);
 	const notes = rootNote?.value
-		? scaleNotes(rootNote?.value, 'major').map((n: any) => n.note)
+		? scaleNotes(rootNote?.value, scale?.value).map((n: any) => n.note)
 		: [];
 
 	function getRootNoteOptions(): OptionType[] {
@@ -133,16 +143,22 @@ function App() {
 		];
 	}
 
-	function getNeckNotes() {
+	function getScaleOptions() {
 		return [
-			{ note: notes[0], status: 'root' },
-			{ note: notes[1], status: '2M' },
-			{ note: notes[2], status: '3M' },
-			{ note: notes[3], status: '4P' },
-			{ note: notes[4], status: '5P' },
-			{ note: notes[5], status: '6M' },
-			{ note: notes[6], status: '7M' },
+			{ value: 'major', label: 'Major diatonic' },
+			{ value: 'harmonic minor', label: 'Harmonic minor' },
+			{ value: 'melodic minor', label: 'Melodic minor' },
+			{ value: 'diminished', label: 'Diminished' },
+			{ value: 'augmented', label: 'Augmented' },
 		];
+	}
+
+	function getNeckNotes() {
+		const scaleStatuses = SCALE_STATUS_MAP[scale?.value];
+		return notes.map((note, index) => ({
+			note,
+			status: scaleStatuses[index],
+		}));
 	}
 
 	function handleChangeTuning(option) {
@@ -153,6 +169,12 @@ function App() {
 		setRootNote(option);
 	}
 
+	function handleChangeScale(option) {
+		setScale(option);
+	}
+
+	const scaleName = getScaleOptions().find(s => s.value === scale.value)!.label;
+
 	return (
 		<Main>
 			<Header>
@@ -161,7 +183,7 @@ function App() {
 			<Neck>
 				<Fretboard
 					skinType="strings"
-					nrOfFrets={20}
+					nrOfFrets={12}
 					tuning={TUNINGS[tuning?.value]}
 					showNotes={showNotes}
 					selectedNotes={getNeckNotes()}
@@ -190,6 +212,16 @@ function App() {
 					/>
 				</Section>
 				<Section>
+					<label>Scale</label>
+					<Select
+						id="scale"
+						value={scale}
+						placeholder="Select a scale"
+						onChange={handleChangeScale}
+						options={getScaleOptions()}
+					/>
+				</Section>
+				<Section>
 					<CheckBox
 						checked={showNotes}
 						checkBoxStyle={{
@@ -204,18 +236,18 @@ function App() {
 				</Section>
 			</Settings>
 			<Info>
-				<Section style={{ width: '24rem' }}>
-					<InfoTitle>Major scale:</InfoTitle>
+				<Section>
+					<InfoTitle>{scaleName} scale:</InfoTitle>
 					<Notes>
-						{notes.map((note: string, index: number) => (
-							<Note color={STATUS_COLOR_MAP[INTERVAL_LABELS[index]]}>
-								{INTERVAL_LABELS[index]}: {note}
+						{getNeckNotes().map(({ note, status }) => (
+							<Note color={STATUS_COLOR_MAP[status]}>
+								{status ? `${status}:` : ''} {note}
 							</Note>
 						))}
 					</Notes>
 				</Section>
 
-				<Section style={{ width: '2rem' }}>
+				<Section>
 					<img
 						alt="circle-of-fifths"
 						src={`${basePath}static/images/circle-of-fifths.jpg`}
