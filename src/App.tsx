@@ -5,7 +5,7 @@ import CheckBox from 'react-animated-checkbox';
 import styled from 'styled-components';
 
 const Main = styled.main`
-	background-image: url(neck-visualizer/static/images/cool.png);
+	background-image: url(static/images/cool.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	display: grid;
@@ -81,7 +81,7 @@ const Note = styled.li<{ color: string }>`
 	}
 `;
 
-const ROOT_NOTES = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+const ROOT_NOTES = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'F'];
 const TUNINGS = {
 	STANDARD: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
 	FOURTHS: ['E2', 'A2', 'D3', 'G3', 'C4', 'F4'],
@@ -151,7 +151,7 @@ function App() {
 	return (
 		<Main>
 			<Header>
-				<Title>Neck Visualizer</Title>
+				<Title>Guitar Neck Visualizer</Title>
 			</Header>
 			<Neck>
 				<Fretboard
@@ -195,7 +195,7 @@ function App() {
 						duration={400}
 						onClick={() => setShowNotes(!showNotes)}
 					/>
-					<Label>Show all notes</Label>
+					<Label>Show notes</Label>
 				</Section>
 			</Settings>
 			<Info>
