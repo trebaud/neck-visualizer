@@ -4,17 +4,21 @@ import Fretboard, { scaleNotes } from 'react-fretboard';
 import CheckBox from 'react-animated-checkbox';
 import styled from 'styled-components';
 
-const basePath = process.env.NODE_ENV === 'development' ? 'neck-visualizer/' : '';
-
 const Main = styled.main`
-	background-image: url(${basePath}static/images/cool.png);
-	background-size: cover;
 	display: grid;
 	grid-gap: 1rem;
 	grid-template-areas:
 		'header header'
 		'neck neck'
 		'settings info';
+
+	@media (max-width: 800px) {
+		grid-template-areas:
+			'header'
+			'neck'
+			'settings'
+			'info';
+	}
 `;
 
 const Header = styled.div`
@@ -24,12 +28,9 @@ const Header = styled.div`
 `;
 
 const Title = styled.span`
-	border-radius: 2rem;
 	padding: 1rem;
 	font-size: 3rem;
-	color: magenta;
-	background-color: #fff;
-	opacity: 0.5;
+	color: #fff;
 `;
 
 const Neck = styled.div`
@@ -58,8 +59,6 @@ const Info = styled.div`
 	opacity: 0.8;
 	margin-top: 2rem;
 	border-radius: 0.25rem;
-	display: flex;
-	flex-direction: columns;
 `;
 
 const InfoTitle = styled.div`
@@ -121,10 +120,14 @@ type OptionType = {
 };
 
 function App() {
+	const [defaultTuning] = getTuningOptions();
+	const [defaultScale] = getScaleOptions();
+
 	const [rootNote, setRootNote] = useState<OptionType>();
-	const [tuning, setTuning] = useState(getTuningOptions()[0]);
-	const [scale, setScale] = useState(getScaleOptions()[0]);
+	const [tuning, setTuning] = useState(defaultTuning);
+	const [scale, setScale] = useState(defaultScale);
 	const [showNotes, setShowNotes] = useState<boolean>(true);
+
 	const notes = rootNote?.value
 		? scaleNotes(rootNote?.value, scale?.value).map((n: any) => n.note)
 		: [];
@@ -173,12 +176,12 @@ function App() {
 		setScale(option);
 	}
 
-	const scaleName = getScaleOptions().find(s => s.value === scale.value)!.label;
+	const scaleName = getScaleOptions().find(s => s.value === scale.value)?.label;
 
 	return (
 		<Main>
 			<Header>
-				<Title>Guitar Neck Visualizer</Title>
+				<Title>🎸 Guitar Neck Visualizer 🎸</Title>
 			</Header>
 			<Neck>
 				<Fretboard
@@ -240,18 +243,11 @@ function App() {
 					<InfoTitle>{scaleName} scale:</InfoTitle>
 					<Notes>
 						{getNeckNotes().map(({ note, status }) => (
-							<Note color={STATUS_COLOR_MAP[status]}>
+							<Note key={note} color={STATUS_COLOR_MAP[status]}>
 								{status ? `${status}:` : ''} {note}
 							</Note>
 						))}
 					</Notes>
-				</Section>
-
-				<Section>
-					<img
-						alt="circle-of-fifths"
-						src={`${basePath}static/images/circle-of-fifths.jpg`}
-					/>
 				</Section>
 			</Info>
 		</Main>
