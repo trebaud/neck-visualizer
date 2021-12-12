@@ -38,7 +38,6 @@ const Neck = styled.div`
   margin: 0 2rem;
   padding: 2rem;
   background-color: #fff;
-  opacity: 0.8;
   border-radius: 0.25rem;
 `;
 
@@ -47,7 +46,6 @@ const Settings = styled.div`
   padding: 2rem;
   margin: 2rem 0 3rem 2rem;
   background-color: #fff;
-  opacity: 0.8;
   border-radius: 0.25rem;
 `;
 
@@ -56,7 +54,6 @@ const Info = styled.div`
   padding: 2rem;
   margin: 2rem 2rem 3rem 0;
   background-color: #fff;
-  opacity: 0.8;
   margin-top: 2rem;
   border-radius: 0.25rem;
 `;
